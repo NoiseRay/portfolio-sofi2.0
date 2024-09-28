@@ -14,9 +14,9 @@ async function sendEmail(props: ISendEmail) {
     port: import.meta.env.EMAIL_PORT,
     user: import.meta.env.EMAIL,
     pass: import.meta.env.EMAIL_PASS,
+    recipient: import.meta.env.RECIPIENT_EMAIL
   };
-
-  let transporter = nodemailer.createTransport({
+  let options = {
     host: data.host,
     port: data.port,
     secure: false,
@@ -24,11 +24,11 @@ async function sendEmail(props: ISendEmail) {
       user: data.email,
       pass: data.pass,
     },
-  });
-
+  }
+  let transporter = nodemailer.createTransport(options)
   let message = {
     from: data.email,
-    to: data.email,
+    to: data.recipient,
     subject: props.subject,
     html: `
       <section style="padding: 1rem; height: 100%; width: 100%; font-family: Arial, sans-serif;">
